@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Collection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Flashcard Collections</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Add Collection</h1>
+        <form method="post" action="{{ url_for('add_collection') }}">
+            <div class="form-group">
+                <label for="collectionName">Collection Name</label>
+                <input type="text" class="form-control" id="collectionName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="flashcardsData">Flashcards Data (JSON Format)</label>
+                <textarea class="form-control" id="flashcardsData" name="flashcards" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Collection</button>
+        </form>
+        
+        <br>
+
+        <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">
+                    How to get your flashcards?
+                  </button>
+                </h5>
+              </div>
+          
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    Hey ChatGPT! Make me 20 flashcards for the following lecture text on a very high difficulty. Return nothing else than this only desired output: as a list of JSON objects like this: [{"front":"question", "back": "answer"}, {"front":"question", "back": "answer"}]. The lecture:
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

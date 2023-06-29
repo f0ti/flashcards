@@ -1,0 +1,59 @@
+/* Add your custom CSS styles here */
+
+body {
+    padding-top: 60px;
+}
+
+.card-columns {
+    column-count: 2;
+}
+
+.flashcard-answer {
+    display: none;
+}
+
+.btn-toggle-answer {
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-toggle-answer:hover {
+    background-color: #0056b3;
+}
+
+.delete-collection-btn {
+    transition: background-color 0.3s ease;
+}
+
+.delete-collection-btn:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Animation Classes */
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s;
+}
+
+.flashcard-clicked {
+    animation: flashcardClicked 0.5s;
+}
+
+@keyframes flashcardClicked {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

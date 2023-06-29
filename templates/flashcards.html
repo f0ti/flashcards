@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ collection.name }} Flashcards</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .flashcard-answer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Flashcard Collections</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>{{ collection.name }} Flashcards</h1>
+        <hr>
+        <a href="{{ url_for('index') }}" class="btn btn-primary mb-4">Back to Collections</a>
+        
+        <form method="post" action="{{ url_for('flashcards', collection_id=collection.id) }}">
+            <div class="form-row">
+                <div class="col">
+                    <input type="text" class="form-control" name="front" placeholder="Question" required>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" name="back" placeholder="Answer" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">Add Flashcard</button>
+                </div>
+            </div>
+        </form>
+        
+        <hr>
+        <h3>Flashcards:</h3>
+        {% if collection.flashcards %}
+            <ul class="list-group">
+                {% for flashcard in collection.flashcards %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>{{ flashcard.front }}</h5>
+                                <p class="flashcard-answer">{{ flashcard.back }}</p>
+                                <button class="btn btn-secondary toggle-answer-btn">Toggle Answer</button>
+                            </div>
+                            <div>
+                                <form class="d-inline" action="{{ url_for('delete_flashcard', collection_id=collection.id, flashcard_id=flashcard.id) }}" method="post">
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No flashcards found.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.toggle-answer-btn').click(function() {
+                $(this).siblings('.flashcard-answer').toggle();
+            });
+        });
+    </script>
+</body>
+</html>
