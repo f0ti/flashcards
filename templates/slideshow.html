@@ -104,7 +104,7 @@
         {% set selected_flashcard = collection.flashcards | random %}
         <h3 style="font-size: 20px;font-weight: bold;">{{ selected_flashcard.front }}</h3>
         <hr><br>
-        <p class="answer">{{ selected_flashcard.back }}</p>
+        <p style="display: none" class="answer">{{ selected_flashcard.back }}</p>
       </div>
 
       <div class="btn-group">
