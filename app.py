@@ -1,8 +1,8 @@
 import os
 import json
-import requests
+import random
 
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
@@ -98,6 +98,13 @@ def delete_flashcard(collection_id, flashcard_id):
     db.session.delete(flashcard)
     db.session.commit()
     return redirect(url_for('flashcards', collection_id=collection_id))
+
+
+@app.route('/collection/<int:collection_id>/slideshow', methods=['GET'])
+def slideshow(collection_id):
+    collection = Collection.query.get_or_404(collection_id)
+
+    return render_template('slideshow.html', collection=collection)
 
 
 if __name__ == '__main__':

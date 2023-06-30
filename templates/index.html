@@ -78,23 +78,24 @@
         <h3>Collections:</h3>
         {% if collections %}
             {% for collection in collections %}
-                    <div class="flashcard-collection">
-                        <a href="{{ url_for('flashcards', collection_id=collection.id) }}"></a>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h5 class="collection-header">{{ collection.name }}</h5>
-                                <p>Number of flashcards: {{ collection.flashcards|length }}</p>
-                            </div>
-                            <div>
-                                <a href="{{ url_for('flashcards', collection_id=collection.id) }}" class="btn btn-primary">View Flashcards</a>
-                                <a href="{{ url_for('edit_collection', collection_id=collection.id) }}" class="btn btn-secondary">Edit</a>
-                                <form class="d-inline" action="{{ url_for('delete_collection', collection_id=collection.id) }}" method="post">
-                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                        </a>
+            <div class="flashcard-collection">
+                <a href="{{ url_for('flashcards', collection_id=collection.id) }}"></a>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="collection-header">{{ collection.name }}</h5>
+                        <p>Number of flashcards: {{ collection.flashcards|length }}</p>
                     </div>
+                    <div>
+                        <a href="{{ url_for('flashcards', collection_id=collection.id) }}" class="btn btn-primary">View Flashcards</a>
+                        <a href="{{ url_for('edit_collection', collection_id=collection.id) }}" class="btn btn-secondary">Edit</a>
+                        <form class="d-inline" action="{{ url_for('delete_collection', collection_id=collection.id) }}" method="post">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                        
+                        <a href="{{ url_for('slideshow', collection_id=collection.id) }}" class="btn btn-info">Slideshow</a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         {% else %}
             <p>No collections found.</p>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flashcard Slideshow</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+      height: 100vh;
+      background-color: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    }
+
+    .flashcard {
+      font-size: large;
+      width: 500px;
+      height: 300px;
+      border: 1px solid black;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      cursor: pointer;
+      animation-duration: 0.5s;
+      animation-fill-mode: both;
+    }
+
+    .flashcard:hover {
+      background-color: #f5f5f5;
+    }
+
+    .flashcard-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .slide-in {
+      animation-name: slideIn;
+    }
+
+    .slide-out {
+      animation-name: slideOut;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+    }
+
+    .btn-group {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .return-button {
+      margin-bottom: 20px;
+    }
+
+    .return-button a {
+      display: inline-block;
+      padding: 10px;
+    }
+
+    .answer {
+        display: none;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Flashcard Collections</a>
+  </nav>
+
+  <div class="container mt-4 flashcard-container">
+    <div class="return-button">
+      <a href="{{ url_for('flashcards', collection_id=collection.id) }}" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M10 4a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 4.5H9.5a.5.5 0 0 0 .5-.5z"/>
+      </svg> Back to Collection</a>
+    </div>
+    <h1>{{ collection.name }} Slideshow</h1>
+    <hr>
+
+    {% if collection.flashcards %}
+      <div class="flashcard slide-in">
+        {% set selected_flashcard = collection.flashcards | random %}
+        <h3 style="font-size: 20px;font-weight: bold;">{{ selected_flashcard.front }}</h3>
+        <hr><br>
+        <p class="answer">{{ selected_flashcard.back }}</p>
+      </div>
+
+      <div class="btn-group">
+        {% if collection.flashcards|length > 1 %}
+          <button class="btn btn-primary" onClick="window.location.reload();">Show Random</button>
+        {% endif %}
+      </div>
+      
+    {% else %}
+      <p>No flashcards found in this collection.</p>
+    {% endif %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    var flashcards = document.querySelectorAll('.flashcard');
+    var currentIndex = 0;
+
+    function toggleAnswer() {
+      var answer = flashcards[currentIndex].querySelector('.answer');
+      answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+    }
+
+    flashcards[currentIndex].addEventListener('click', toggleAnswer);
+  </script>
+</body>
+</html>

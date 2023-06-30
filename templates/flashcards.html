@@ -36,7 +36,10 @@
     <div class="container mt-4">
         <h1>{{ collection.name }} Flashcards</h1>
         <hr>
-        <a href="{{ url_for('index') }}" class="btn btn-primary mb-4">Back to Collections</a>
+        <a href="{{ url_for('index') }}" class="btn btn-primary mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+          </svg> Back to Collections</a>
+        <a href="{{ url_for('slideshow', collection_id=collection.id) }}" class="btn btn-info mb-4">Slideshow</a>
         
         <form method="post" action="{{ url_for('flashcards', collection_id=collection.id) }}">
             <div class="form-row">
