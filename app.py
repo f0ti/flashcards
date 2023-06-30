@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')  # external render database
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('LOCALHOST_DATABASE_URI')  # local database  
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')  # external render database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('LOCALHOST_DATABASE_URI')  # local database  
 app.secret_key = 'gaye'
 
 db = SQLAlchemy(app)

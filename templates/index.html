@@ -7,31 +7,36 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+        }
+    
         .add-collection-btn {
             font-size: 18px;
         }
-
+    
         .flashcard-collection {
             border: 1px solid #ccc;
             border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
+            cursor: pointer;
         }
-
+    
         .flashcard-collection:hover {
             background-color: #f5f5f5;
         }
-
+    
         .flashcard-collection .collection-header {
             font-weight: bold;
             margin-bottom: 5px;
         }
-
+    
         .flashcard-collection .flashcard-info {
             display: none;
             margin-top: 10px;
         }
-
+    
         .flashcard-collection .toggle-btn {
             background-color: #007bff;
             color: #fff;
@@ -40,22 +45,23 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-
+    
         .flashcard-collection .toggle-btn:hover {
             background-color: #0056b3;
         }
-
+    
         .flashcard-collection .toggle-btn.active {
             background-color: #dc3545;
         }
-
+    
         .flashcard-collection .flashcard-info.show {
             display: block;
         }
     </style>
+    
 </head>
 <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
         <a class="navbar-brand" href="{{ url_for('index') }}">Flashcard Collections</a>
     </nav>
 
@@ -72,28 +78,23 @@
         <h3>Collections:</h3>
         {% if collections %}
             {% for collection in collections %}
-                <div class="flashcard-collection">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="collection-header">{{ collection.name }}</h5>
-                            <p>Number of flashcards: {{ collection.flashcards|length }}</p>
+                    <div class="flashcard-collection">
+                        <a href="{{ url_for('flashcards', collection_id=collection.id) }}"></a>
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="collection-header">{{ collection.name }}</h5>
+                                <p>Number of flashcards: {{ collection.flashcards|length }}</p>
+                            </div>
+                            <div>
+                                <a href="{{ url_for('flashcards', collection_id=collection.id) }}" class="btn btn-primary">View Flashcards</a>
+                                <a href="{{ url_for('edit_collection', collection_id=collection.id) }}" class="btn btn-secondary">Edit</a>
+                                <form class="d-inline" action="{{ url_for('delete_collection', collection_id=collection.id) }}" method="post">
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </div>
                         </div>
-                        <div>
-                            <button class="btn toggle-btn">Toggle</button>
-                            <a href="{{ url_for('flashcards', collection_id=collection.id) }}" class="btn btn-primary">View Flashcards</a>
-                            <a href="{{ url_for('edit_collection', collection_id=collection.id) }}" class="btn btn-secondary">Edit</a>
-                            <form class="d-inline" action="{{ url_for('delete_collection', collection_id=collection.id) }}" method="post">
-                                <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </div>
+                        </a>
                     </div>
-                    <div class="flashcard-info">
-                        {% for flashcard in collection.flashcards %}
-                            <p><strong>Question:</strong> {{ flashcard.question }}</p>
-                            <p><strong>Answer:</strong> {{ flashcard.answer }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
             {% endfor %}
         {% else %}
             <p>No collections found.</p>
@@ -102,12 +103,5 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.toggle-answer-btn').click(function() {
-                $(this).siblings('.flashcard-answer').toggle();
-            });
-        });
-    </script>
 </body>
 </html>
